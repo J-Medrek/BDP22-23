@@ -89,9 +89,9 @@ FROM converted;
 SELECT UpdateGeometrySRID('national_parks','geom',27700);
 
 CREATE TABLE sentinel_clip AS
-select ST_Clip(a.st_transform , b.geom, true)
-FROM converted  AS a, national_parks AS b
-where ST_Intersects(a.st_transform,b.geom) and  b.gid=1;
+select ST_Clip(a.rast, b.geom, true)
+FROM sentinel_ndvi AS a, national_parks AS b
+where ST_Intersects(a.rast,b.geom) and  b.gid=1;
  
 CREATE INDEX idx_intersects_rast_gist6 ON sentinel_clip
 USING gist (ST_ConvexHull(st_clip));
